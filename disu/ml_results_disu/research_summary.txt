@@ -1,0 +1,77 @@
+
+=============================================================================
+RESEARCH SUMMARY REPORT — DISABILITY (disu) ML ANALYSIS (BDHS 2022)
+=============================================================================
+Dataset        : BDHS2022_MH_ML_ready_1.csv
+Target         : disu (Disability/Disutility) — Binary (0 = No, 1 = Yes)
+Total Sample   : 30,078 respondents
+Disability +ve : 1,414 (4.7% prevalence)
+Feature Space  : 25 variables initially
+Selected Feat. : 21 via Union (MI + Chi2 + RF), Top-15 each
+
+EXCLUDED VARIABLES (Data Leakage Prevention):
+   MTH22 (Months since last birth)     — Perfect separator: 100% accuracy alone
+   MTH24 (Months since 2nd last birth) — High correlation (0.49)
+   dep   (Depression)                  — Other mental health outcome (leakage)
+   anx   (Anxiety)                     — Other mental health outcome (leakage)
+
+--- METHODOLOGY (PROPER ML PIPELINE — NO DATA LEAKAGE) ----------------------
+1. Train/Test Split (80-20, stratified by disu)
+2. Exclude perfect separators + other outcome variables (dep, anx)
+3. Feature Selection on ORIGINAL training data (BEFORE SMOTE)
+4. SMOTE applied AFTER feature selection (leakage-free)
+5. 5-fold Cross-Validation for model stability assessment
+6. Both Train & Test accuracy reported (overfitting detection)
+
+--- IMPUTATION STRATEGY (Smart Option B) ------------------------------------
+Structural nulls (skip-pattern MNAR): Filled with 0 (Not Applicable category)
+  Affected columns: V212, V312, V511, V632, V701, V730, V171A, age_dif, age_dif_cat, internet_use, contra_decision3, parity_cat
+Random nulls: Median (continuous) or Mode (categorical <= 15 unique values)
+Class imbalance: SMOTE applied AFTER feature selection
+
+--- SELECTED FEATURES (Union: MI + Chi2 + RF) --------------------------------
+V005, V012, V021, V023, V024, V025, V106, V190, V201, V212, V312, V511, V632, V701, V730, age_cat, age_dif, age_dif_cat, age_fb_cat, contra, contra_decision3
+
+--- MODEL PERFORMANCE (with Overfitting Detection) ---------------------------
+                 Model  Train_Acc (%)  Test_Acc (%)  Overfit_Gap (%)  Precision (%)  Recall (%)  F1-Score (%)  ROC-AUC (%)
+1        Random Forest         100.00         95.20             4.80          20.00        0.71          1.37        75.16
+2              XGBoost          97.62         95.16             2.46          16.67        0.71          1.36        75.11
+3        Decision Tree          91.92         90.87             1.04          11.78       14.49         13.00        71.85
+4  Logistic Regression          80.49         77.63             2.86           8.51       38.52         13.94        68.68
+5         SVM (Linear)          80.60         77.91             2.69           8.62       38.52         14.09        68.10
+6                  KNN         100.00         81.47            18.53           8.23       28.98         12.82        64.37
+
+WARNING: Overfitting if Train-Test gap > 5%
+
+--- BEST MODEL ---------------------------------------------------------------
+  Random Forest
+  ROC-AUC  : 75.16%  (PRIMARY — threshold-independent discrimination)
+  F1-Score : 1.37%   (precision-recall balance)
+  Recall   : 0.71%  (disabled women detected — critical for screening)
+
+--- METRIC PRIORITY RATIONALE (Health Research) ------------------------------
+1. ROC-AUC   — PRIMARY: threshold-independent, best for imbalanced binary
+2. Recall    — Missing a disabled woman = higher cost than false alarm
+3. F1-Score  — Harmonic mean of precision and recall
+4. Accuracy alone is misleading with imbalanced classes
+
+--- OUTPUT FILES -------------------------------------------------------------
+Saved to: e:\hafiza mam work\disu\ml_results_disu
+  null_analysis.csv              Null count per column
+  null_heatmap.png               Missing pattern heatmap
+  class_distribution.png         Target class distribution pie chart
+  smote_before_after.png         Class balance visualisation SMOTE effect
+  feature_MI.csv                 MI scores for all features
+  feature_Chi2.csv               Chi2 scores for all features
+  feature_RF.csv                 RF Importance for all features
+  selected_features_union.csv    Final selected feature list
+  feature_importance_RF.png      RF importance bar chart (top 20)
+  feature_importance_MI.png      MI score bar chart (top 20)
+  cm_[ModelName].png             Confusion matrix per model (orange theme)
+  model_comparison.csv           Full metrics comparison table
+  model_comparison_chart.png     5-metric side-by-side bar chart
+  roc_auc_ranking.png            ROC-AUC horizontal ranking (best=red)
+  train_vs_test_accuracy.png     Overfitting detection chart
+  cross_validation_f1.png        5-fold CV F1 with error bars
+  research_summary.txt           This report
+=============================================================================

@@ -1,0 +1,77 @@
+
+=============================================================================
+RESEARCH SUMMARY REPORT — ANXIETY ML ANALYSIS (BDHS 2022)
+=============================================================================
+Dataset        : BDHS2022_MH_ML_ready_1.csv
+Target         : anx (Anxiety) — Binary (0 = No, 1 = Yes)
+Total Sample   : 30,078 respondents
+Anxiety +ve    : 896 (3.0% prevalence)
+Feature Space  : 25 variables initially
+Selected Feat. : 22 via Union (MI + Chi2 + RF), Top-15 each
+
+EXCLUDED VARIABLES (Data Leakage Prevention):
+   MTH22 (Months since last birth)     — Perfect separator: 100% accuracy alone
+   MTH24 (Months since 2nd last birth) — High correlation (0.49)
+   dep   (Depression)                  — Other mental health outcome (leakage)
+   disu  (Disability)                  — Other mental health outcome (leakage)
+
+--- METHODOLOGY (NO DATA LEAKAGE) ------------------------------------------
+1. Train/Test Split (80-20, stratified by anx)
+2. Exclude perfect separators + other outcome variables
+3. Feature Selection on ORIGINAL training data (BEFORE SMOTE)
+4. SMOTE applied AFTER feature selection (leakage-free)
+5. 5-fold Cross-Validation for model stability
+6. Both Train & Test accuracy reported (overfitting detection)
+
+--- IMPUTATION (Smart Option B) ---------------------------------------------
+Structural nulls (skip-pattern MNAR): Filled with 0
+  Columns: V212, V312, V511, V632, V701, V730, V171A, age_dif, age_dif_cat, internet_use, contra_decision3, parity_cat
+Random nulls: Median (continuous) or Mode (categorical)
+Class imbalance: SMOTE applied AFTER feature selection
+
+--- SELECTED FEATURES (Union: MI + Chi2 + RF) --------------------------------
+V005, V012, V021, V023, V025, V106, V190, V201, V212, V312, V511, V632, V701, V730, age_cat, age_dif, age_dif_cat, age_fb_cat, contra, contra_decision3, parity_cat, wealth_cat
+
+--- MODEL PERFORMANCE (with Overfitting Detection) ---------------------------
+                 Model  Train_Acc (%)  Test_Acc (%)  Overfit_Gap (%)  Precision (%)  Recall (%)  F1-Score (%)  ROC-AUC (%)
+1              XGBoost          98.49         96.96             1.53           0.00        0.00          0.00        75.12
+2        Random Forest         100.00         96.99             3.01          25.00        0.56          1.09        74.11
+3        Decision Tree          93.27         95.48            -2.20           4.85        2.79          3.55        69.91
+4  Logistic Regression          82.20         79.04             3.16           4.61       30.73          8.02        67.21
+5         SVM (Linear)          82.20         79.42             2.78           4.70       30.73          8.16        66.73
+6                  KNN         100.00         84.97            15.03           6.06       27.93          9.96        62.82
+
+WARNING: Overfitting if gap > 5% between Train and Test accuracy
+
+--- BEST MODEL ---------------------------------------------------------------
+  XGBoost
+  ROC-AUC  : 75.12%  (PRIMARY — best discrimination ability)
+  F1-Score : 0.0%   (balances precision and recall)
+  Recall   : 0.0%  (detected anxiety cases — critical for screening)
+
+--- METRIC PRIORITY (Epidemiological Research) --------------------------------
+1. ROC-AUC — PRIMARY (threshold-independent, best for imbalanced binary)
+2. Recall  — Missing an anxious woman costs more than a false alarm
+3. F1-Score — Harmonic mean of precision and recall
+4. Accuracy alone is misleading with imbalanced classes
+
+--- OUTPUT FILES -------------------------------------------------------------
+Saved to: e:\hafiza mam work\anxiety\ml_results_anxiety
+  null_analysis.csv              Null counts per column
+  null_heatmap.png               Missing pattern visual map
+  class_distribution.png         Target class pie chart
+  smote_before_after.png         Class balance before/after SMOTE
+  feature_MI.csv                 MI scores all features
+  feature_Chi2.csv               Chi2 scores all features
+  feature_RF.csv                 RF Importance all features
+  selected_features_union.csv    Final selected features
+  feature_importance_RF.png      RF importance bar chart
+  feature_importance_MI.png      MI score bar chart
+  cm_[ModelName].png             Confusion matrix per model
+  model_comparison.csv           Full metrics table
+  model_comparison_chart.png     Side-by-side bar chart all metrics
+  roc_auc_ranking.png            ROC-AUC horizontal ranking chart
+  train_vs_test_accuracy.png     Overfitting detection chart
+  cross_validation_f1.png        5-fold CV F1 comparison
+  research_summary.txt           This report
+=============================================================================
