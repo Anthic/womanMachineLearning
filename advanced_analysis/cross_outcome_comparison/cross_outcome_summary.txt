@@ -1,0 +1,49 @@
+
+=============================================================================
+CROSS-OUTCOME COMPARISON SUMMARY â€” BDHS 2022 MENTAL HEALTH ML STUDY
+Q1 PUBLICATION STANDARD
+=============================================================================
+Outcomes Analyzed  : Depression (dep) | Anxiety (anx) | Mental Health (disu)
+All 3 outcomes present âœ…
+Bootstrap B        : 1000 iterations per outcome
+Statistical Tests  : McNemar's Test + Bootstrap AUC Comparison
+
+â”€â”€â”€ BEST MODELS PER OUTCOME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Depression (dep)          â†’ XGBoost                 AUC=75.59%  [73.01â€“78.19]
+  Anxiety (anx)             â†’ XGBoost                 AUC=75.1%  [72.24â€“77.76]
+  Mental Health (disu)      â†’ Random Forest           AUC=75.18%  [73.03â€“77.41]
+
+â”€â”€â”€ OUTPUT FILES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  e:\hafiza mam work\advanced_analysis\cross_outcome_comparison/
+  â”œâ”€ all_outcomes_combined.csv              â€” All models Ã— all outcomes
+  â”œâ”€ best_model_per_outcome.csv             â€” Best model per outcome
+  â”œâ”€ publication_table_all_outcomes.csv     â€” Publication-ready table
+  â”œâ”€ clinical_tests_all_outcomes.csv        â€” McNemar + AUC tests
+  â”œâ”€ cross_outcome_auc_comparison.png       â€” Grouped bar chart
+  â”œâ”€ auc_heatmap_outcomes_x_models.png      â€” AUC heatmap
+  â”œâ”€ f1_heatmap_outcomes_x_models.png       â€” F1 heatmap
+  â”œâ”€ radar_chart_best_models.png            â€” Radar: best model per outcome
+  â”œâ”€ shap_cross_outcome_heatmap.png         â€” SHAP cross-outcome heatmap
+  â””â”€ shap_cross_outcome_matrix.csv          â€” Raw SHAP cross-outcome data
+
+â”€â”€â”€ VARIABLE DEFINITIONS (for methods section) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+INDEPENDENT VARIABLES:
+  v024            = Division
+  v025            = Residence (Urban/Rural)
+  v106            = Respondent's Education Level
+  v701            = Husband's Education Level
+  age_cat         = Current Age of Respondent
+  age_fb_cat      = Teenage Pregnancy (Age at First Birth)
+  parity_cat      = Total Number of Children
+  age_diff_cat    = Age Difference of Spouses
+  wealth_cat      = Wealth Index
+  internet_use    = Mass Media / Internet Use
+  contra          = Contraceptive Use
+  contra_decision = Decision for Contraceptive Use
+
+SURVEY DESIGN (for weight adjustment only):
+  v005            = Sampling Weight (divided by 1,000,000)
+  v021            = Primary Sampling Unit (PSU)
+  v023            = Stratification Number
+=============================================================================

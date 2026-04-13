@@ -1,0 +1,69 @@
+
+=============================================================================
+ADVANCED ANALYSIS REPORT â€” DEPRESSION ML STUDY (BDHS 2022)
+Q1 PUBLICATION STANDARD
+=============================================================================
+Dataset        : BDHS2022_MH_ML_ready_1.csv
+Target         : dep (Depression) â€” Binary (0 = No, 1 = Yes)
+Total Sample   : 30,078 respondents
+Prevalence     : 3.41% positive (1,026 cases)
+Selected Feat. : 21 variables (Union: MI + Chi2 + RF, Top-15)
+
+â”€â”€â”€ VARIABLE LABELS (Corrected for Publication) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+INDEPENDENT (Predictors):
+  v024          = Division
+  v025          = Residence (Urban/Rural)
+  v106          = Respondent's Education Level
+  v701          = Husband's Education Level
+  age_cat       = Current Age of Respondent
+  age_fb_cat    = Teenage Pregnancy (Age at First Birth)
+  parity_cat    = Total Number of Children
+  age_diff_cat  = Age Difference of Spouses
+  wealth_cat    = Wealth Index
+  internet_use  = Mass Media / Internet Use
+  contra        = Contraceptive Use
+  contra_decision = Decision for Contraceptive Use
+
+DEPENDENT (Mental Health Outcomes):
+  dep  = Depression  |  anx = Anxiety  |  disu = Mental Health Disutility
+
+SURVEY DESIGN:
+  v005 = Sampling Weight  |  v021 = PSU  |  v023 = Stratification
+
+â”€â”€â”€ METHODOLOGY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  1. Survey-weighted descriptive analysis (v005/1,000,000)
+  2. Smart imputation (structural nulls â†’ 0, MAR â†’ Median/Mode)
+  3. Feature selection: Union(MI, Chi2, RF Importance), Top-15 each
+  4. SMOTE (AFTER feature selection â€” leakage-free)
+  5. 6 ML classifiers trained and evaluated
+  6. Bootstrap CI (B=1000) for all performance metrics
+  7. McNemar's test for pairwise model comparison
+  8. Bootstrap AUC comparison (DeLong-equivalent)
+  9. SHAP explainability for best model
+
+â”€â”€â”€ BEST MODEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  â˜… XGBoost
+     AUC      : 75.59%  [73.01â€“78.19]
+     F1-Score : 2.8%   [0.0â€“6.28]
+     Recall   : 1.47%  [0.0â€“3.32]
+     Precision: 30.04%  [0.0â€“61.56]
+
+â”€â”€â”€ CLINICAL TESTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  McNemar's Test p-value    : 0.7728  (Not significant)
+  Bootstrap AUC diff p-value: 0.9500  (Not significant)
+
+â”€â”€â”€ OUTPUT FILES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  e:\hafiza mam work\advanced_analysis\results_dep/
+  â”œâ”€ weighted_descriptives.csv        â€” Survey-weighted variable breakdown
+  â”œâ”€ bootstrap_CI_results.csv         â€” Bootstrap 95% CI for all metrics
+  â”œâ”€ bootstrap_CI_chart.png           â€” CI visualization per metric
+  â”œâ”€ clinical_tests.csv               â€” McNemar + AUC comparison results
+  â”œâ”€ auc_comparison_bootstrap.png     â€” Bootstrap AUC comparison plot
+  â”œâ”€ roc_curves_all_models.png        â€” ROC overlay with CI labels
+  â”œâ”€ full_results_with_CI.csv         â€” Complete results for publication table
+  â”œâ”€ shap_importance_bar.png          â€” SHAP feature importance bar
+  â”œâ”€ shap_beeswarm.png                â€” SHAP beeswarm plot
+  â”œâ”€ shap_dependence_top3.png         â€” SHAP dependence: top 3 features
+  â”œâ”€ shap_values.csv                  â€” Raw SHAP values matrix
+  â””â”€ shap_feature_importance.csv      â€” SHAP mean |value| per feature
+=============================================================================

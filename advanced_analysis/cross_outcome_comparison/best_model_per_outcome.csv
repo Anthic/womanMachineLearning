@@ -1,0 +1,4 @@
+Outcome,Best_Model,AUC_%,AUC_95CI,F1_%,F1_95CI,Recall_%,Recall_95CI,Precision_%,Precision_95CI
+Depression (dep),XGBoost,75.59,[73.01â€“78.19],2.8,[0.0â€“6.28],1.47,[0.0â€“3.32],30.04,[0.0â€“61.56]
+Anxiety (anx),XGBoost,75.1,[72.24â€“77.76],0.0,[0.0â€“0.0],0.0,[0.0â€“0.0],0.0,[0.0â€“0.0]
+Mental Health (disu),Random Forest,75.18,[73.03â€“77.41],1.36,[0.0â€“3.44],0.71,[0.0â€“1.8],20.13,[0.0â€“50.0]

@@ -1,0 +1,7 @@
+Test,Model_1,Model_2,Statistic,P_Value,Significant_p05,Interpretation,Outcome
+McNemar's Test,XGBoost,Random Forest,0.0833,0.7728,False,No significant error difference,Depression (dep)
+Bootstrap AUC Comparison,XGBoost,Random Forest,0.0248,0.95,False,AUC difference may be by chance,Depression (dep)
+McNemar's Test,XGBoost,Random Forest,0.25,0.6171,False,,Anxiety (anx)
+Bootstrap AUC Comparison,XGBoost,Random Forest,0.0101,0.98,False,,Anxiety (anx)
+McNemar's Test,Random Forest,XGBoost,0.0714,0.7893,False,,Mental Health (disu)
+Bootstrap AUC Comparison,Random Forest,XGBoost,0.0005,1.0,False,,Mental Health (disu)
