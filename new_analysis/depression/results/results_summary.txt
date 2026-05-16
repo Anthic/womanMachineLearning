@@ -1,0 +1,38 @@
+Clean ML analysis summary
+Outcome: Depression
+Target mapping: 0 = no depression, 1 = depression
+Total complete target rows: 11523
+Positive class count: 817 (7.09%)
+
+Approved features used:
+Division, Residence, Respondent_Education, age_at_First_Birth, Respondent_Age, Parity, Spousal_Age_Gap, Wealth_Index, Internet_Use, Contraceptive_Use, contra_decision_maker
+
+Selected features from train-only MI + Chi2 + RF union:
+Contraceptive_Use, Division, Internet_Use, Parity, Residence, Respondent_Age, Respondent_Education, Spousal_Age_Gap, Wealth_Index, age_at_First_Birth, contra_decision_maker
+
+Excluded from predictors:
+CASEID, V021, V023, Weight, V171A, V312, V511, V632, V701, V730, Depression, Anxiety, Mental_Health
+
+Best model by test ROC-AUC:
+Random Forest | ROC-AUC=55.13% | F1=8.72% | Recall=10.43% | Specificity=90.2% | MCC=0.0054
+
+Hyperparameter tuning:
+              Model                                                                                               Best_Params  Best_CV_ROC_AUC
+      Random Forest                      {"model__max_depth": null, "model__min_samples_leaf": 5, "model__n_estimators": 400}           0.5640
+            XGBoost {"model__learning_rate": 0.1, "model__max_depth": 4, "model__n_estimators": 200, "model__subsample": 0.8}           0.5603
+                KNN                                                  {"model__n_neighbors": 15, "model__weights": "distance"}           0.5473
+Logistic Regression                                                                                        {"model__C": 0.01}           0.5467
+         SVM Linear                                                                             {"model__estimator__C": 0.01}           0.5459
+      Decision Tree                                                 {"model__max_depth": null, "model__min_samples_leaf": 15}           0.5362
+
+Model results:
+              Model  Train_Accuracy  Test_Accuracy  Balanced_Accuracy  Precision  Recall    F1  ROC_AUC  PR_AUC  Specificity     MCC  CV_F1_Mean  CV_F1_Std   TN  FP  FN  TP
+      Random Forest           87.93          84.56              50.31       7.49   10.43  8.72    55.13    8.27        90.20  0.0054       12.03       1.83 1932 210 146  17
+                KNN           93.69          84.51              51.71       9.24   13.50 10.97    54.63    8.36        89.92  0.0288       10.84       2.54 1926 216 141  22
+      Decision Tree           80.49          77.27              52.06       8.51   22.70 12.37    54.26    8.43        81.42  0.0270       11.69       1.19 1744 398 126  37
+            XGBoost           78.43          75.14              49.22       6.57   19.02  9.76    53.50    8.03        79.41 -0.0100       12.92       1.88 1701 441 132  31
+         SVM Linear           62.83          62.08              52.67       8.03   41.72 13.47    52.93    8.83        63.63  0.0284       13.99       1.93 1363 779  95  68
+Logistic Regression           62.92          62.21              52.46       7.96   41.10 13.33    52.88    8.78        63.82  0.0262       14.04       1.59 1367 775  96  67
+
+Method note:
+Feature selection used only the training split. The approved predictors are coded as categories, so the final models use most-frequent imputation, SMOTEN for categorical oversampling, and one-hot encoding inside the imblearn Pipeline. Each GridSearchCV and cross-validation fold oversampled only its training portion. The held-out test set was never oversampled. Because outcomes are rare, model_results.csv keeps default-threshold metrics, while threshold_tuning_best_f1.csv reports the best F1 threshold on the untouched test split.

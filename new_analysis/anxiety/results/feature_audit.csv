@@ -1,0 +1,25 @@
+Column,Status,Reason
+CASEID,EXCLUDED,ID/design variable/raw duplicate/other target
+V021,EXCLUDED,ID/design variable/raw duplicate/other target
+V023,EXCLUDED,ID/design variable/raw duplicate/other target
+Division,USED_FEATURE,Renamed approved predictor
+Residence,USED_FEATURE,Renamed approved predictor
+Respondent_Education,USED_FEATURE,Renamed approved predictor
+V171A,EXCLUDED,ID/design variable/raw duplicate/other target
+V312,EXCLUDED,ID/design variable/raw duplicate/other target
+V511,EXCLUDED,ID/design variable/raw duplicate/other target
+V632,EXCLUDED,ID/design variable/raw duplicate/other target
+V701,EXCLUDED,ID/design variable/raw duplicate/other target
+V730,EXCLUDED,ID/design variable/raw duplicate/other target
+age_at_First_Birth,USED_FEATURE,Renamed approved predictor
+Respondent_Age,USED_FEATURE,Renamed approved predictor
+Parity,USED_FEATURE,Renamed approved predictor
+Spousal_Age_Gap,USED_FEATURE,Renamed approved predictor
+Wealth_Index,USED_FEATURE,Renamed approved predictor
+Internet_Use,USED_FEATURE,Renamed approved predictor
+Contraceptive_Use,USED_FEATURE,Renamed approved predictor
+contra_decision_maker,USED_FEATURE,Renamed approved predictor
+Weight,EXCLUDED,ID/design variable/raw duplicate/other target
+Depression,EXCLUDED,ID/design variable/raw duplicate/other target
+Anxiety,TARGET,Current outcome
+Mental_Health,EXCLUDED,ID/design variable/raw duplicate/other target

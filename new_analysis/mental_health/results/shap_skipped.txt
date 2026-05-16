@@ -1,0 +1,1 @@
+SHAP could not be completed for KNN: Bounded SHAP is configured for tree and logistic models, not KNN.

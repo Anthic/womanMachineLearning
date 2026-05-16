@@ -1,0 +1,7 @@
+Model,Best_F1_Threshold,Best_F1,Precision_at_Best_F1,Recall_at_Best_F1,Accuracy_at_Best_F1,Balanced_Accuracy_at_Best_F1,Specificity_at_Best_F1,MCC_at_Best_F1
+Random Forest,0.125,18.52,10.31,90.67,22.13,52.69,14.71,0.0457
+XGBoost,0.16,18.03,9.99,92.89,17.57,51.16,9.42,0.0237
+SVM Linear,0.235,18.01,9.99,91.11,19.0,51.16,11.2,0.022
+Logistic Regression,0.275,17.95,9.98,89.33,20.26,51.06,12.79,0.019
+Decision Tree,0.06,17.93,10.22,73.33,34.49,51.81,30.29,0.0235
+KNN,0.05,17.91,10.33,67.56,39.57,52.05,36.54,0.0253
